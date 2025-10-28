@@ -1,0 +1,866 @@
+﻿<Window x:Class="school_management.view.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:school_management.view"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:viewmodels="clr-namespace:school_management.view_model"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="School Management System"
+        Height="768" Width="1440">
+
+
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBg}" BorderBrush="#E5E7EB" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="50,20,20,10">
+                    <TextBlock Text="School Management" 
+                               FontSize="16" 
+                               FontWeight="SemiBold" 
+                               Foreground="{StaticResource TextPrimary}" 
+                               VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- Menu Items -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
+                    <StackPanel>
+                        <!-- Main Section -->
+                        <Grid Margin="16,0,16,2">
+                            <TextBlock Text="Main" Style="{StaticResource SectionHeaderStyle}" HorizontalAlignment="Left"/>
+                        </Grid>
+
+                        <!-- Dashboard -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Dashboard">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Dashboard">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Dashboard"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Dashboard" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ThLarge" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Dashboard">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Dashboard" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Dashboard">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Students -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Students">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Students">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Students"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Students" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserGraduate" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Students">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Students" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Students">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Teachers -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Teachers">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Teachers">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Teachers"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Teachers" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserAstronaut" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Teachers">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Teachers" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Teachers">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Parents -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Parents">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Parents">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Parents"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Parents" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="PeopleGroup" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Parents">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Parents" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Parents">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Classes -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Classes">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Classes">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Classes"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Classes" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="School" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Classes">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Classes" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Classes">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Academic Section -->
+                        <Grid Margin="16,0,16,0">
+                            <TextBlock Text="Academic" Style="{StaticResource SectionHeaderStyle}" HorizontalAlignment="Left"/>
+                        </Grid>
+
+                        <!-- Subjects -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Subjects">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Subjects">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Subjects"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Subjects" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="BookOpen" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Subjects">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Subjects" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Subjects">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Courses -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Courses">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Courses">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Courses"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Courses" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Book" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Courses">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Courses" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Courses">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Enrollment -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Enrollment">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Enrollment">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Enrollment"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Enrollment" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ClipboardList" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Enrollment">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Enrollment" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Enrollment">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+
+                        <!-- Timetable -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Timetable">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Timetable">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Timetable"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Timetable" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Clock" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Timetable">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Enrollment" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Timetable">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Academic Year -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Academic Year">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Academic Year">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Academic Year"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Academic Year" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CalendarAlt" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Academic Year">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Academic Year" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Academic Year">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Assessment Section -->
+                        <Grid Margin="16,0,16,0">
+                            <TextBlock Text="Assessment" Style="{StaticResource SectionHeaderStyle}" HorizontalAlignment="Left"/>
+                        </Grid>
+
+                        <!-- Attendance -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Attendance">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Attendance">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Attendance"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Attendance" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ClipboardCheck" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Attendance">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Attendance" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Attendance">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Grades -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Grades">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Grades">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Grades"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Grades" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Trophy" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Grades">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Grades" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Grades">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <!-- Financial Section -->
+                        <Grid Margin="16,0,16,0">
+                            <TextBlock Text="Financial" Style="{StaticResource SectionHeaderStyle}" HorizontalAlignment="Left"/>
+                        </Grid>
+
+                        <!-- Fee Management -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Fee Management">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Fee Management">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Fee Management"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Fee Management" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Dollar" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Fee Management">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Fee Management" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Fee Management">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+
+                        <!-- Payments -->
+                        <Border Padding="16,12" Margin="8,2" Cursor="Hand" CornerRadius="8" Tag="Payments">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMenu}" Value="Payments">
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarHover}"/>
+                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedMenu}" Value="Payments"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource SelectedBg}"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding NavigateCommand}" CommandParameter="Payments" MouseAction="LeftClick"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="DollarSign" Width="18" Height="18" Margin="0,0,12,0">
+                                    <fa:IconImage.Style>
+                                        <Style TargetType="fa:IconImage">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Payments">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </fa:IconImage.Style>
+                                </fa:IconImage>
+                                <TextBlock Text="Payments" FontSize="14" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedMenu}" Value="Payments">
+                                                    <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                                                    <Setter Property="FontWeight" Value="Medium"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer -->
+                <Border Grid.Row="2" Background="#F9FAFB" Padding="16,12" BorderBrush="#E5E7EB" BorderThickness="0,1,0,0">
+                    <TextBlock Text="School Management System&#x0a;v2.0.0" 
+                               Foreground="{StaticResource TextSecondary}" 
+                               FontSize="11" 
+                               TextAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Border Grid.Column="1" Background="{StaticResource MainBg}">
+            <ContentControl Content="{Binding CurrentView}"/>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Primary Colors -->
+    <SolidColorBrush x:Key="PrimaryBlue" Color="#3B82F6"/>
+    <SolidColorBrush x:Key="PrimaryGreen" Color="#10B981"/>
+    <SolidColorBrush x:Key="PrimaryPurple" Color="#8B5CF6"/>
+    <SolidColorBrush x:Key="PrimaryOrange" Color="#F59E0B"/>
+    <SolidColorBrush x:Key="PrimaryRed" Color="#EF4444"/>
+
+    <!-- Background Colors -->
+    <SolidColorBrush x:Key="SidebarBg" Color="#1F2937"/>
+    <SolidColorBrush x:Key="SidebarHover" Color="#374151"/>
+    <SolidColorBrush x:Key="MainBg" Color="#F3F4F6"/>
+    <SolidColorBrush x:Key="CardBg" Color="#FFFFFF"/>
+
+    <!-- Text Colors -->
+    <SolidColorBrush x:Key="TextPrimary" Color="#111827"/>
+    <SolidColorBrush x:Key="TextSecondary" Color="#6B7280"/>
+    <SolidColorBrush x:Key="TextTertiary" Color="#9CA3AF"/>
+    <SolidColorBrush x:Key="TextWhite" Color="#FFFFFF"/>
+
+    <!-- Light Background Colors for Icons/Buttons -->
+    <SolidColorBrush x:Key="BlueLightBg" Color="#DBEAFE"/>
+    <SolidColorBrush x:Key="GreenLightBg" Color="#D1FAE5"/>
+    <SolidColorBrush x:Key="PurpleLightBg" Color="#EDE9FE"/>
+    <SolidColorBrush x:Key="OrangeLightBg" Color="#FEF3C7"/>
+
+    <!-- Hover Background Colors -->
+    <SolidColorBrush x:Key="BlueHoverBg" Color="#EFF6FF"/>
+    <SolidColorBrush x:Key="GreenHoverBg" Color="#F0FDF4"/>
+    <SolidColorBrush x:Key="PurpleHoverBg" Color="#FAF5FF"/>
+
+    <!-- Border Colors -->
+    <SolidColorBrush x:Key="BorderLight" Color="#E5E7EB"/>
+    <SolidColorBrush x:Key="BorderMedium" Color="#D1D5DB"/>
+
+    <!-- Shadow Color -->
+    <Color x:Key="ShadowColor">#E5E7EB</Color>
+
+    <!-- FontAwesome Icon Sizes -->
+    <system:Double x:Key="IconSizeSmall">14</system:Double>
+    <system:Double x:Key="IconSizeMedium">16</system:Double>
+    <system:Double x:Key="IconSizeLarge">18</system:Double>
+    <system:Double x:Key="IconSizeExtraLarge">24</system:Double>
+
+</ResourceDictionary>
