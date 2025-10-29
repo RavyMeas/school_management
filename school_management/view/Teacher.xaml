@@ -363,7 +363,7 @@
                         Command="{Binding AddTeacherCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                                <TextBlock Text="Update Teacher" VerticalAlignment="Center"/>
+                                <TextBlock Text="Add Teacher" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </Border>

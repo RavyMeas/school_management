@@ -50,7 +50,7 @@ namespace school_management.Services
                 Grade = "Grade 10",
                 Homeroom = "Room 101",
                 Capacity = 30,
-                CurrentEnrollment = 28,
+                CurrentEnrollment = 0,
                 TeacherId = teachers.Count > 0 ? teachers[0].Id : 0,
                 TeacherName = teachers.Count > 0 ? teachers[0].FullName : "",
                 AcademicYear = "2024-2025",
@@ -63,7 +63,7 @@ namespace school_management.Services
                 Grade = "Grade 9",
                 Homeroom = "Room 205",
                 Capacity = 25,
-                CurrentEnrollment = 24,
+                CurrentEnrollment = 0,
                 TeacherId = teachers.Count > 1 ? teachers[1].Id : 0,
                 TeacherName = teachers.Count > 1 ? teachers[1].FullName : "",
                 AcademicYear = "2024-2025",
@@ -76,7 +76,7 @@ namespace school_management.Services
                 Grade = "Grade 11",
                 Homeroom = "Room 304",
                 Capacity = 28,
-                CurrentEnrollment = 26,
+                CurrentEnrollment = 0,
                 TeacherId = teachers.Count > 2 ? teachers[2].Id : 0,
                 TeacherName = teachers.Count > 2 ? teachers[2].FullName : "",
                 AcademicYear = "2024-2025",
@@ -95,7 +95,6 @@ namespace school_management.Services
             return _classes.FirstOrDefault(c => c.Id == id);
         }
 
-        // FIXED: Changed return type to bool and returns success status
         public bool AddClass(ClassRoom classItem)
         {
             try
@@ -114,6 +113,9 @@ namespace school_management.Services
                 // Assign new ID
                 classItem.Id = _nextClassId++;
 
+                // Ensure CurrentEnrollment is 0 for new classes
+                classItem.CurrentEnrollment = 0;
+
                 // Add to list
                 _classes.Add(classItem);
 
@@ -125,7 +127,6 @@ namespace school_management.Services
             }
         }
 
-        // FIXED: Changed return type to bool
         public bool UpdateClass(ClassRoom classItem)
         {
             try
@@ -137,11 +138,11 @@ namespace school_management.Services
                     existingClass.Grade = classItem.Grade;
                     existingClass.Homeroom = classItem.Homeroom;
                     existingClass.Capacity = classItem.Capacity;
-                    existingClass.CurrentEnrollment = classItem.CurrentEnrollment;
                     existingClass.TeacherId = classItem.TeacherId;
                     existingClass.TeacherName = classItem.TeacherName;
                     existingClass.AcademicYear = classItem.AcademicYear;
                     existingClass.Term = classItem.Term;
+                    // Note: Don't update CurrentEnrollment manually, it's calculated
                     return true;
                 }
                 return false;
@@ -152,7 +153,6 @@ namespace school_management.Services
             }
         }
 
-        // FIXED: Changed return type to bool
         public bool DeleteClass(int id)
         {
             try
@@ -202,15 +202,21 @@ namespace school_management.Services
             {
                 var classItem = GetClassById(classId);
                 if (classItem == null)
-                    return false;
+                {
+                    throw new Exception("Class not found");
+                }
 
                 // Check if already enrolled
-                if (_enrollments.Any(e => e.StudentId == studentId && e.ClassId == classId && e.Status == "Active"))
-                    return false;
+                if (IsStudentEnrolled(studentId, classId))
+                {
+                    throw new Exception("Student is already enrolled in this class");
+                }
 
                 // Check capacity
                 if (classItem.CurrentEnrollment >= classItem.Capacity)
-                    return false;
+                {
+                    throw new Exception($"Class is full (Capacity: {classItem.Capacity})");
+                }
 
                 var enrollment = new Enrollment
                 {
@@ -223,8 +229,24 @@ namespace school_management.Services
                 _enrollments.Add(enrollment);
 
                 // Update class enrollment count
-                classItem.CurrentEnrollment = _enrollments.Count(e => e.ClassId == classId && e.Status == "Active");
+                UpdateClassEnrollmentCount(classId);
 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EnrollStudentInMultipleClasses(int studentId, List<int> classIds)
+        {
+            try
+            {
+                foreach (var classId in classIds)
+                {
+                    EnrollStudent(studentId, classId);
+                }
                 return true;
             }
             catch
@@ -237,17 +259,18 @@ namespace school_management.Services
         {
             try
             {
-                var enrollment = _enrollments.FirstOrDefault(e => e.StudentId == studentId && e.ClassId == classId && e.Status == "Active");
+                var enrollment = _enrollments.FirstOrDefault(e =>
+                    e.StudentId == studentId &&
+                    e.ClassId == classId &&
+                    e.Status == "Active");
+
                 if (enrollment != null)
                 {
                     enrollment.Status = "Dropped";
 
                     // Update class enrollment count
-                    var classItem = GetClassById(classId);
-                    if (classItem != null)
-                    {
-                        classItem.CurrentEnrollment = _enrollments.Count(e => e.ClassId == classId && e.Status == "Active");
-                    }
+                    UpdateClassEnrollmentCount(classId);
+
                     return true;
                 }
                 return false;
@@ -256,6 +279,27 @@ namespace school_management.Services
             {
                 return false;
             }
+        }
+
+        public void UnenrollStudentFromAllClasses(int studentId)
+        {
+            var studentEnrollments = _enrollments
+                .Where(e => e.StudentId == studentId && e.Status == "Active")
+                .ToList();
+
+            foreach (var enrollment in studentEnrollments)
+            {
+                enrollment.Status = "Dropped";
+                UpdateClassEnrollmentCount(enrollment.ClassId);
+            }
+        }
+
+        public bool IsStudentEnrolled(int studentId, int classId)
+        {
+            return _enrollments.Any(e =>
+                e.StudentId == studentId &&
+                e.ClassId == classId &&
+                e.Status == "Active");
         }
 
         public List<ClassRoom> GetClassesForStudent(int studentId)
@@ -277,6 +321,47 @@ namespace school_management.Services
 
             var studentService = StudentService.Instance;
             return studentService.GetAllStudents().Where(s => studentIds.Contains(s.Id)).ToList();
+        }
+
+        public int GetEnrollmentCount(int classId)
+        {
+            return _enrollments.Count(e => e.ClassId == classId && e.Status == "Active");
+        }
+
+        public List<ClassRoom> GetAvailableClassesForStudent(int studentId, string grade = null)
+        {
+            var allClasses = string.IsNullOrWhiteSpace(grade)
+                ? GetAllClasses()
+                : GetAllClasses().Where(c => c.Grade == grade).ToList();
+
+            // Filter out classes that are full or student is already enrolled in
+            return allClasses.Where(c =>
+                !IsStudentEnrolled(studentId, c.Id) &&
+                c.CurrentEnrollment < c.Capacity
+            ).ToList();
+        }
+
+        // Helper method to update class enrollment count
+        private void UpdateClassEnrollmentCount(int classId)
+        {
+            var classItem = GetClassById(classId);
+            if (classItem != null)
+            {
+                classItem.CurrentEnrollment = _enrollments.Count(e =>
+                    e.ClassId == classId &&
+                    e.Status == "Active");
+            }
+        }
+
+        // Refresh all class enrollment counts (useful after bulk operations)
+        public void RefreshAllEnrollmentCounts()
+        {
+            foreach (var classItem in _classes)
+            {
+                classItem.CurrentEnrollment = _enrollments.Count(e =>
+                    e.ClassId == classItem.Id &&
+                    e.Status == "Active");
+            }
         }
 
         // Teacher Assignment Operations
@@ -325,11 +410,16 @@ namespace school_management.Services
             return _classes.Where(c => classIds.Contains(c.Id)).ToList();
         }
 
-        public bool IsClassNameUnique(string className, int? excludeId = null)
+        // Statistics Methods
+        public Dictionary<string, int> GetClassStatistics()
         {
-            return !_classes.Any(c =>
-                c.ClassName.Equals(className, StringComparison.OrdinalIgnoreCase) &&
-                (!excludeId.HasValue || c.Id != excludeId.Value));
+            return new Dictionary<string, int>
+            {
+                { "TotalClasses", _classes.Count },
+                { "TotalStudents", _enrollments.Count(e => e.Status == "Active") },
+                { "AvailableSeats", _classes.Sum(c => c.Capacity - c.CurrentEnrollment) },
+                { "FullClasses", _classes.Count(c => c.CurrentEnrollment >= c.Capacity) }
+            };
         }
     }
 }

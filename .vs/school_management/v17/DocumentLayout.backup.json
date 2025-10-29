@@ -1,0 +1,40 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MSII\\source\\repos\\school_management\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC720923-E54E-47E3-B4DC-90510C6297A0}|school_management\\school_management.csproj|c:\\users\\msii\\source\\repos\\school_management\\school_management\\view\\teacher.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{FC720923-E54E-47E3-B4DC-90510C6297A0}|school_management\\school_management.csproj|solutionrelative:school_management\\view\\teacher.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Teacher.xaml",
+              "DocumentMoniker": "C:\\Users\\MSII\\source\\repos\\school_management\\school_management\\view\\Teacher.xaml",
+              "RelativeDocumentMoniker": "school_management\\view\\Teacher.xaml",
+              "ToolTip": "C:\\Users\\MSII\\source\\repos\\school_management\\school_management\\view\\Teacher.xaml*",
+              "RelativeToolTip": "school_management\\view\\Teacher.xaml*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-10-29T02:31:24.849Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

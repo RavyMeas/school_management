@@ -7,7 +7,7 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1210">
-    
+
     <Grid>
         <!-- Main Content -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -71,7 +71,8 @@
                                          Padding="35,10,10,10"
                                          BorderThickness="0"
                                          Background="Transparent"
-                                         FontSize="14"/>
+                                         FontSize="14"
+                                         VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
 
@@ -188,10 +189,16 @@
               Background="#80000000">
             <Border Background="White"
                     CornerRadius="12"
-                    MaxWidth="500"
+                    MaxWidth="600"
                     Margin="50"
-                    VerticalAlignment="Center"
-                    >
+                    VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect Color="{StaticResource ShadowColor}" 
+                                      ShadowDepth="0" 
+                                      BlurRadius="16" 
+                                      Opacity="0.3"/>
+                </Border.Effect>
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -219,7 +226,7 @@
                     </Grid>
 
                     <!-- Dialog Content -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="24,0">
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="24,0" MaxHeight="400">
                         <StackPanel>
                             <!-- First Name and Last Name -->
                             <Grid Margin="0,0,0,16">
@@ -230,7 +237,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="First Name" 
+                                    <TextBlock Text="First Name *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
@@ -238,11 +245,17 @@
                                     <TextBox Text="{Binding NewStudent.FirstName, UpdateSourceTrigger=PropertyChanged}"
                                              Padding="12"
                                              BorderBrush="{StaticResource BorderLight}"
-                                             BorderThickness="1"/>
+                                             BorderThickness="1">
+                                        <TextBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Last Name" 
+                                    <TextBlock Text="Last Name *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
@@ -250,13 +263,19 @@
                                     <TextBox Text="{Binding NewStudent.LastName, UpdateSourceTrigger=PropertyChanged}"
                                              Padding="12"
                                              BorderBrush="{StaticResource BorderLight}"
-                                             BorderThickness="1"/>
+                                             BorderThickness="1">
+                                        <TextBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </StackPanel>
                             </Grid>
 
                             <!-- Email -->
                             <StackPanel Margin="0,0,0,16">
-                                <TextBlock Text="Email" 
+                                <TextBlock Text="Email *" 
                                            FontSize="13"
                                            FontWeight="Medium"
                                            Foreground="{StaticResource TextPrimary}"
@@ -264,7 +283,13 @@
                                 <TextBox Text="{Binding NewStudent.Email, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="12"
                                          BorderBrush="{StaticResource BorderLight}"
-                                         BorderThickness="1"/>
+                                         BorderThickness="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="6"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
                             </StackPanel>
 
                             <!-- Grade and Class -->
@@ -276,16 +301,22 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Grade" 
+                                    <TextBlock Text="Grade *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
                                                Margin="0,0,0,6"/>
                                     <ComboBox ItemsSource="{Binding Grades}"
-                                              SelectedItem="{Binding NewStudent.Grade}"
+                                              SelectedItem="{Binding SelectedGradeForNew, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Padding="12"
                                               BorderBrush="{StaticResource BorderLight}"
-                                              BorderThickness="1"/>
+                                              BorderThickness="1">
+                                        <ComboBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
@@ -294,11 +325,17 @@
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
                                                Margin="0,0,0,6"/>
-                                    <ComboBox ItemsSource="{Binding Classes}"
-                                              SelectedItem="{Binding NewStudent.Class}"
+                                    <ComboBox ItemsSource="{Binding AvailableClasses}"
+                                              SelectedItem="{Binding NewStudent.Class, Mode=TwoWay}"
                                               Padding="12"
                                               BorderBrush="{StaticResource BorderLight}"
-                                              BorderThickness="1"/>
+                                              BorderThickness="1">
+                                        <ComboBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
                                 </StackPanel>
                             </Grid>
 
@@ -323,11 +360,12 @@
                             BorderBrush="{StaticResource BorderLight}"
                             Padding="24"
                             Margin="0,20,0,0">
-                        <Button Content="Add Student"
-                                Style="{StaticResource PrimaryButtonStyle}"
+                        <Button Style="{StaticResource PrimaryButtonStyle}"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding AddStudentCommand}">
-                            
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Add Student" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </Button>
                     </Border>
                 </Grid>
@@ -335,14 +373,11 @@
         </Grid>
 
         <!-- Edit Student Dialog Overlay -->
-   
-
-        <!--  -->
         <Grid Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVisibilityConverter}}" 
               Background="#80000000">
             <Border Background="White"
                     CornerRadius="12"
-                    MaxWidth="500"
+                    MaxWidth="600"
                     Margin="50"
                     VerticalAlignment="Center">
                 <Border.Effect>
@@ -379,7 +414,7 @@
                     </Grid>
 
                     <!-- Dialog Content -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="24,0">
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="24,0" MaxHeight="400">
                         <StackPanel>
                             <!-- First Name and Last Name -->
                             <Grid Margin="0,0,0,16">
@@ -390,7 +425,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="First Name" 
+                                    <TextBlock Text="First Name *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
@@ -398,11 +433,17 @@
                                     <TextBox Text="{Binding EditStudent.FirstName, UpdateSourceTrigger=PropertyChanged}"
                                              Padding="12"
                                              BorderBrush="{StaticResource BorderLight}"
-                                             BorderThickness="1"/>
+                                             BorderThickness="1">
+                                        <TextBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Last Name" 
+                                    <TextBlock Text="Last Name *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
@@ -410,13 +451,19 @@
                                     <TextBox Text="{Binding EditStudent.LastName, UpdateSourceTrigger=PropertyChanged}"
                                              Padding="12"
                                              BorderBrush="{StaticResource BorderLight}"
-                                             BorderThickness="1"/>
+                                             BorderThickness="1">
+                                        <TextBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </StackPanel>
                             </Grid>
 
                             <!-- Email -->
                             <StackPanel Margin="0,0,0,16">
-                                <TextBlock Text="Email" 
+                                <TextBlock Text="Email *" 
                                            FontSize="13"
                                            FontWeight="Medium"
                                            Foreground="{StaticResource TextPrimary}"
@@ -424,7 +471,13 @@
                                 <TextBox Text="{Binding EditStudent.Email, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="12"
                                          BorderBrush="{StaticResource BorderLight}"
-                                         BorderThickness="1"/>
+                                         BorderThickness="1">
+                                    <TextBox.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="6"/>
+                                        </Style>
+                                    </TextBox.Resources>
+                                </TextBox>
                             </StackPanel>
 
                             <!-- Grade and Class -->
@@ -436,19 +489,23 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Grade" 
+                                    <TextBlock Text="Grade *" 
                                                FontSize="13"
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
                                                Margin="0,0,0,6"/>
                                     <ComboBox ItemsSource="{Binding Grades}"
-                                              SelectedItem="{Binding EditStudent.Grade}"
+                                              SelectedItem="{Binding SelectedGradeForEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Padding="12"
                                               BorderBrush="{StaticResource BorderLight}"
-                                              BorderThickness="1"/>
+                                              BorderThickness="1">
+                                        <ComboBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
                                 </StackPanel>
-
-                              
 
                                 <StackPanel Grid.Column="2">
                                     <TextBlock Text="Class" 
@@ -456,11 +513,17 @@
                                                FontWeight="Medium"
                                                Foreground="{StaticResource TextPrimary}"
                                                Margin="0,0,0,6"/>
-                                    <ComboBox ItemsSource="{Binding Classes}"
-                                              SelectedItem="{Binding EditStudent.Class}"
+                                    <ComboBox ItemsSource="{Binding AvailableClassesForEdit}"
+                                              SelectedItem="{Binding EditStudent.Class, Mode=TwoWay}"
                                               Padding="12"
                                               BorderBrush="{StaticResource BorderLight}"
-                                              BorderThickness="1"/>
+                                              BorderThickness="1">
+                                        <ComboBox.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
                                 </StackPanel>
                             </Grid>
 
@@ -496,8 +559,5 @@
                 </Grid>
             </Border>
         </Grid>
-    
     </Grid>
-
 </UserControl>
-

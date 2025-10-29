@@ -415,10 +415,7 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding AddClassCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <fa:IconImage Icon="Check" 
-                                              Foreground="White"
-                                              Width="16" Height="16"
-                                              Margin="0,0,8,0"/>
+                                
                                 <TextBlock Text="Add Class" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
@@ -643,10 +640,7 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding UpdateClassCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <fa:IconImage Icon="Check" 
-                                              Foreground="White"
-                                              Width="16" Height="16"
-                                              Margin="0,0,8,0"/>
+                               
                                 <TextBlock Text="Update Class" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
